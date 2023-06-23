@@ -61,6 +61,8 @@ print(datasummary)
 
 **Designated place**: type one or two sentences describing this table of a fellow student below. For example, comment on the mean and median growth of both groups. Then stage, commit and push it to their github repository. 
 
+The presented mean for both groups is significantly different from each other, as the "growth" variable has a mean of 2.46. In comparison, "rgdp" variable has a much more significant mean of 5283.32. In addition the median also varies greatly, from 2.29 to 5393.00.
+
 
 ### Part 3: Make a table summarizing reressions using modelsummary and kable
 

@@ -6,7 +6,7 @@ title: |
 author: |
   | Your Name
   | your_email@students.uu.nl
-  | http://www.github.com/yourgithubname
+  | http://www.github.com/MikolajKompf
 date: April 2023
 urlcolor: purple
 linkcolor: purple
@@ -125,12 +125,20 @@ ANSWER
 **Question 3.7**: In the code chunk below, edit the table such that the cells (including standard errors) corresponding to the variable `treat` have a red background and white text. Make sure to load the `kableExtra` library beforehand.
 
 ```{r}
-
-# use functions from modelsummary to edit this table
+library(kableExtra)
+list(model1, model2, model3, model4) |>
+  modelsummary(stars=T, gof_map = c("nobs", "r.squared")) |>
+  row_spec(row = 3, background = "red", color = "white") |>
+  row_spec(row = 4, background = "red", color = "white")
 ```
 
 **Question 3.8**: Write a piece of code that exports this table (without the formatting) to a Word document. 
 ```{r}
+library(flextable)
+list(model1,model2,model3,model4) |>
+  modelsummary(gof_map = c("nobs", "r.squared"),
+               stars = T, title="regression table",
+               output = "regressiontable_assignment4.docx")
 
 ```
 

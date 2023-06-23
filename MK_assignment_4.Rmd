@@ -4,8 +4,8 @@ title: |
   | Introduction to Applied Data Science
   | 2022-2023
 author: |
-  | Your Name
-  | your_email@students.uu.nl
+  | Mikołaj Kompf
+  | m.kompf@students.uu.nl
   | http://www.github.com/MikolajKompf
 date: April 2023
 urlcolor: purple
@@ -32,7 +32,7 @@ This interpretation will not be graded, but a Github shows the contributors to a
 
 **Question 1.1**: Fill in the __github username__ of the class mate to whose repository you have contributed. 
 
-[msoud7]
+raniaderweesh
 
 ### Part 2: Analyzing various linear models
 
@@ -57,7 +57,6 @@ GrowthSW <- GrowthSW %>%
 datasummary <- datasummary(growth + rgdp60 ~ treat*(Mean + median +sd + min + max), data = GrowthSW)
 print(datasummary)
 
-# write your code here
 ```
 
 **Designated place**: type one or two sentences describing this table of a fellow student below. For example, comment on the mean and median growth of both groups. Then stage, commit and push it to their github repository. 
@@ -73,12 +72,10 @@ In question 2, we have seen that growth rates differ markedly between countries 
 # write t test here
 t.test.result <- t.test(growth ~ treat, data=GrowthSW)
 print(t.test.result)
-
 ```
 
 **Question 3.2**: What is the $p$-value of the test, and what does that mean? Write down your answer below.
 
-According to the test above, the p-value is equal to roughly 0.7, exceeding the significance level of 0.05. Therefore, as p-value is bigger than the 5% significance level, we cannot reject the null hypothesis as we have only a weak evidence against it. In economic terms, this means that the true difference in means between groups with zero revolutions and groups with some revolutions is equal to zero.
 
 We can also control for other factors by including them in a linear model, for example:
 
@@ -87,9 +84,8 @@ $$
 $$
 
 **Question 3.3**: What do you think the purpose of including the variable `rgdp60` is? Look at `?GrowthSW` to find out what the variables mean. 
- 
-  HERE
 
+The purpose of adding the variable "rgdp60" is to adjust for the effect of the initial level of real GDP per capita in 1960. The "rgdp60" variable showcases the real GDP in 1960, and - by adding it as a control variable - we are able to analyse the relationship between the "treat" variable and economic growth. 
 
 We now want to estimate a stepwise model. Stepwise means that we first estimate a univariate regression $\text{growth}_i = \beta_0 + \beta_1 \cdot \text{treat}_i + \epsilon_i$, and in each subsequent model, we add one control variable. 
 
@@ -101,17 +97,13 @@ model2 <- update(model1,. ~ . +rgdp60)
 model3 <- update(model2,. ~ . +tradeshare)
 model4 <- update(model3,. ~ . +education)
 table <- list(model1=model1, model2=model2, model3=model3, model4=model4)
-
 ```
 
 Now, we put the models in a list, and see what `modelsummary` gives us:
 
 ```{r}
 list(model1, model2, model3, model4) |>
-  modelsummary(stars=T, gof_map = c("nobs","r.squared"))
-# edit this to remove the statistics other than R-squared
-# and N
- 
+  modelsummary(stars=T,gof_map = c("nobs","r.squared")) 
 
 ```
 
@@ -119,8 +111,9 @@ list(model1, model2, model3, model4) |>
 
 **Question 3.6**: According to this analysis, what is the main driver of economic growth? Why?
 
-Education??
-ANSWER
+For us to understand the main driver of economic growth, we have to analyse the R-squared values in the model summaries. The R-squared value shows us the proportion of the variance in the dependent variable (growth) that can be explained by the independent variable in the model. 
+
+By comparing the R-Squared values of the models, the highest R-Squared that suggests that independent variables are the main drivers of economic growth. Consequently, we know that the highest R-squared values in the model determine economic growth.  
 
 **Question 3.7**: In the code chunk below, edit the table such that the cells (including standard errors) corresponding to the variable `treat` have a red background and white text. Make sure to load the `kableExtra` library beforehand.
 
@@ -128,19 +121,19 @@ ANSWER
 library(kableExtra)
 list(model1, model2, model3, model4) |>
   modelsummary(stars=T, gof_map = c("nobs", "r.squared")) |>
-  row_spec(row = 3, background = "red", color = "white") |>
-  row_spec(row = 4, background = "red", color = "white")
+  row_spec(row=3,background="red", color="white") |>
+  row_spec(row=4, background="red", color="white")
+# use functions from modelsummary to edit this table
 ```
 
 **Question 3.8**: Write a piece of code that exports this table (without the formatting) to a Word document. 
+
 ```{r}
 library(flextable)
-list(model1,model2,model3,model4) |>
-  modelsummary(gof_map = c("nobs", "r.squared"),
-               stars = T, title="regression table",
-               output = "regressiontable_assignment4.docx")
-
+list(model1,model2,model3,model4)|>
+  modelsummary(gof_map=c("nobs","r.squared"),
+               starts=T, title="regression table",
+               output="regressiontable_assignment4.docx")
 ```
-
 
 ## The End
